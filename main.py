@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 
 def main():
@@ -30,10 +31,13 @@ def main():
 
     dataframe = pd.DataFrame(list(zip(temperature_date, temperature_value)), columns=['date', 'temp'])
 
+    dataframe['date'] = pd.to_datetime(dataframe['date'])  
     plt.plot(dataframe['date'], dataframe['temp'])
     plt.title(f'График температуры в городе {city_name}')
     plt.xlabel('Даты')
     plt.ylabel('Температуры (°C)')
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    plt.gcf().autofmt_xdate()
     plt.show()
 
 if __name__=='__main__':
